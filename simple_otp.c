@@ -70,8 +70,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define LOCAL			static inline
-#define BITSPERBYTE		8
+#define LOCAL            static inline
+#define BITSPERBYTE        8
 
 LOCAL char* char_to_binary_string(char);
 LOCAL char next_key_char(void);
@@ -81,52 +81,52 @@ static const char *key;
 
 int main(int argc, char **argv)
 {
-	char *plain_text;
-	unsigned int i, pt_length;
+    char *plain_text;
+    unsigned int i, pt_length;
 
-	if (argc != 3) {
-		printf("%s plain_text key\n", argv[0]);
-		return 1;
-	}
-	
-	plain_text = argv[1];
-	key = argv[2];
+    if (argc != 3) {
+        printf("%s plain_text key\n", argv[0]);
+        return 1;
+    }
+    
+    plain_text = argv[1];
+    key = argv[2];
 
     pt_length = strlen(plain_text);
-	for (i=0; i<pt_length; i++)
-		display_code(plain_text[i]);
-	return 0;
+    for (i=0; i<pt_length; i++)
+        display_code(plain_text[i]);
+    return 0;
 }
 
 LOCAL void display_code(char pt)
 {
-	char next_key = next_key_char();
+    char next_key = next_key_char();
 
-	printf("PLT: %c\t%s\n", pt, char_to_binary_string(pt));
-	printf("KEY: %c\t%s\n", next_key, char_to_binary_string(next_key));
-	printf("XOR:   \t%s\n", char_to_binary_string(pt^next_key));
-	printf("\n");
+    printf("PLT: %c\t%s\n", pt, char_to_binary_string(pt));
+    printf("KEY: %c\t%s\n", next_key, char_to_binary_string(next_key));
+    printf("XOR:   \t%s\n", char_to_binary_string(pt^next_key));
+    printf("\n");
 }
 
 LOCAL char next_key_char(void) 
 {
-	static unsigned int next_key = 0;
-	static size_t key_length;
-	key_length = strlen(key);
-	if (next_key >= key_length)
-		next_key = 0;
-	return key[next_key++];
+    static unsigned int next_key = 0;
+    static size_t key_length;
+    key_length = strlen(key);
+    if (next_key >= key_length)
+        next_key = 0;
+    return key[next_key++];
 }
 
 LOCAL char* char_to_binary_string(char schar) 
 {
-	unsigned int bits = BITSPERBYTE*sizeof(char);
-	char *result = malloc(bits);
-	for (; bits>0; bits--) {
-		result[bits-1] = '0';
-		if (schar & 1)
-			result[bits-1] = '1';
-		schar = schar >> 1;
-	}
-	return result;
+    unsigned int bits = BITSPERBYTE*sizeof(char);
+    char *result = malloc(bits);
+    for (; bits>0; bits--) {
+        result[bits-1] = '0';
+        if (schar & 1)
+            result[bits-1] = '1';
+        schar = schar >> 1;
+    }
+    return result;
 }
