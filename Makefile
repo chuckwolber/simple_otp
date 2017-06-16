@@ -1,6 +1,6 @@
 VERSION=0.0.1
 
-CFLAGS += -std=gnu11 -Wall
+CFLAGS += -Wall -Wextra
 
 OBJECTS = simple_otp.c
 SOURCES = $(patsubst %.o,%.c,$(OBJECTS))
